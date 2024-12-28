@@ -12,7 +12,7 @@ export default function Home() {
       <h1 className="text-2xl font-bold">Track your fitness journey</h1>
       <div className="flex flex-row justify-evenly gap-3">
         <div>
-          <a href="/details">
+          <a href="/goals">
             <Card>
               <CardHeader>
                 <CardTitle className="text-center">Enter your goals</CardTitle>
