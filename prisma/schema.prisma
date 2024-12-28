@@ -13,14 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Goals {
   id          Int     @id @default(autoincrement())
   email       String
   name        String?
-  height      Float
-  weight      Float
+  height      Decimal
+  weight      Decimal
   calories    Int
-  goalWeight  Float
-  bodyfat     Float
-  goalBodyFat Float
+  goalWeight  Decimal
+  bodyfat     Decimal
+  goalBodyFat Decimal
 }
