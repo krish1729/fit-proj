@@ -1,13 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -32,21 +26,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { calculateCalories } from "@/lib/calculate-calories";
 import { formSchema } from "@/lib/form-schema";
+import { Button } from "@/components/ui/button";
+import axios from "axios";
 
 export default function Goals() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    // defaultValues: {
-    //   useMetric: false,
-    //   height: 0,
-    //   currWeight: 0,
-    //   currBodyFat: 0,
-    //   goalWeight: 0,
-    //   goalBodyFat: 0,
-    //   lifestyle: "sedentary",
-    //   timeframe: "3months",
-    //   goalCalories: 0,
-    // },
   });
 
   useEffect(() => {
@@ -78,8 +63,10 @@ export default function Goals() {
     return () => subscription.unsubscribe();
   }, [form.watch]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    const res = await axios.post("/api/goals/", values);
+    console.log("values", res);
   }
 
   return (
@@ -87,10 +74,7 @@ export default function Goals() {
       <h1 className="text-4xl font-mono">Enter your goals!</h1>
       <Card>
         <CardHeader>
-          <CardTitle>Enter your Goals</CardTitle>
-          <CardDescription>
-            Enter your weight, and caloric goals
-          </CardDescription>
+          <CardTitle>Enter your weight, and caloric goals</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -123,8 +107,8 @@ export default function Goals() {
                           type="number"
                           placeholder={
                             form.watch("useMetric")
-                              ? "Height (cm)"
-                              : "Height (inches)"
+                              ? "Height (inches)"
+                              : "Height (cm)"
                           }
                           {...field}
                           onChange={(e) => field.onChange(+e.target.value)}
@@ -132,8 +116,8 @@ export default function Goals() {
                       </FormControl>
                       <FormDescription>
                         {form.watch("useMetric")
-                          ? "Enter height in centimeters"
-                          : "Enter height in inches"}
+                          ? "Enter height in inches"
+                          : "Enter height in centimeters"}
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -150,13 +134,18 @@ export default function Goals() {
                           type="number"
                           placeholder={
                             form.watch("useMetric")
-                              ? "Weight (kg)"
-                              : "Weight (lbs)"
+                              ? "Weight (lbs)"
+                              : "Weight (kg)"
                           }
                           {...field}
                           onChange={(e) => field.onChange(+e.target.value)}
                         />
                       </FormControl>
+                      <FormDescription>
+                        {form.watch("useMetric")
+                          ? "Enter weight in pounds"
+                          : "Enter weight in kilograms"}
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -193,13 +182,18 @@ export default function Goals() {
                           type="number"
                           placeholder={
                             form.watch("useMetric")
-                              ? "Weight (kg)"
-                              : "Weight (lbs)"
+                              ? "Weight (lbs)"
+                              : "Weight (kg)"
                           }
                           {...field}
                           onChange={(e) => field.onChange(+e.target.value)}
                         />
                       </FormControl>
+                      <FormDescription>
+                        {form.watch("useMetric")
+                          ? "Enter weight in pounds"
+                          : "Enter weight in kilograms"}
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -303,6 +297,9 @@ export default function Goals() {
           </Form>
         </CardContent>
       </Card>
+      <div>
+        <Button onClick={form.handleSubmit(onSubmit)}>Submit</Button>
+      </div>
     </div>
   );
 }
