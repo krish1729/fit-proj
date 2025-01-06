@@ -48,7 +48,6 @@ export default function Goals() {
         ].includes(name)
       ) {
         const formValues = form.getValues();
-        // Only calculate if we have all required values
         if (
           formValues.height &&
           formValues.currWeight &&
@@ -70,15 +69,14 @@ export default function Goals() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-6 bg-muted min-h-svh">
-      <h1 className="text-4xl font-mono">Enter your goals!</h1>
+    <div className="flex flex-col items-center gap-6 bg-muted min-h-svh p-3">
       <Card>
         <CardHeader>
-          <CardTitle>Enter your weight, and caloric goals</CardTitle>
+          <CardTitle>Enter your goals</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
               <FormField
                 control={form.control}
                 name="useMetric"

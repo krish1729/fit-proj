@@ -9,17 +9,10 @@ export async function POST(request: Request) {
 
     const user = await currentUser();
     const emailAddress = user?.emailAddresses[0]?.emailAddress || "";
-    console.log("email is: ", emailAddress);
     const firstName = user?.firstName;
-    console.log("name is: ", firstName);
 
     const reqData = await request.json();
-    console.log("height is: ", reqData.height);
-    console.log("currWeight is: ", reqData.currWeight);
-    console.log("currBodyFat is: ", reqData.currBodyFat);
-    console.log("goalWeight is: ", reqData.goalWeight);
-    console.log("goalBodyFat is: ", reqData.goalBodyFat);
-    console.log("goalCalories is: ", reqData.goalCalories);
+    console.log("reqData is: ", reqData);
 
     const createGoal = await db.goals.create({
       data: {
@@ -31,6 +24,8 @@ export async function POST(request: Request) {
         goalWeight: reqData.goalWeight,
         bodyfat: reqData.currBodyFat,
         goalBodyFat: reqData.goalBodyFat,
+        lifestyle: reqData.lifestyle,
+        timeframe: reqData.timeframe,
       },
     });
     console.log("data is: ", createGoal);

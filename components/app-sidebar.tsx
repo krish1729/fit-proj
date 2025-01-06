@@ -9,13 +9,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Home, Settings } from "lucide-react";
+import { Home, Settings, UserPen } from "lucide-react";
 
 const items = [
   {
     title: "Home",
     url: "/",
     icon: Home,
+  },
+  {
+    title: "Profile",
+    url: "/account/profile",
+    icon: UserPen,
   },
   {
     title: "Settings",

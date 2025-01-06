@@ -13,14 +13,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model BodyPictures {
+  id            Int      @id @default(autoincrement())
+  email         String
+  weekNumber    Int
+  dateUploaded  DateTime @default(now())
+  imageUrl      String
+  notes         String?
+  frontView     String?
+  leftSideView  String?
+  rightSideView String?
+  backView      String?
+  weight        Decimal? @db.Decimal(10, 2)
+  Goals         Goals?   @relation(fields: [goalsId], references: [id])
+  goalsId       Int?
+
+  @@unique([email, weekNumber])
+  @@index([email, weekNumber])
+}
+
 model Goals {
-  id          Int     @id @default(autoincrement())
-  email       String
-  name        String?
-  height      Decimal
-  weight      Decimal
-  calories    Int
-  goalWeight  Decimal
-  bodyfat     Decimal
-  goalBodyFat Decimal
+  id           Int            @id @default(autoincrement())
+  email        String
+  name         String?
+  height       Decimal        @db.Decimal(10, 2)
+  weight       Decimal        @db.Decimal(10, 2)
+  calories     Int
+  goalWeight   Decimal        @db.Decimal(10, 2)
+  bodyfat      Decimal        @db.Decimal(10, 2)
+  goalBodyFat  Decimal        @db.Decimal(10, 2)
+  startDate    DateTime       @default(now())
+  timeframe    String
+  lifestyle    String
+  bodyPictures BodyPictures[]
 }
