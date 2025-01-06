@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Home, Settings, UserPen } from "lucide-react";
+import { Eclipse, Home, Settings, UserPen } from "lucide-react";
 
 const items = [
   {
@@ -21,6 +21,11 @@ const items = [
     title: "Profile",
     url: "/account/profile",
     icon: UserPen,
+  },
+  {
+    title: "BodyPics",
+    url: "/bodypics",
+    icon: Eclipse,
   },
   {
     title: "Settings",

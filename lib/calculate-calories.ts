@@ -3,9 +3,9 @@ import { ACTIVITY_MULTIPLIERS, formSchema } from "./form-schema";
 
 export const calculateCalories = (values: z.infer<typeof formSchema>) => {
   const weight = values.useMetric
-    ? values.currWeight
-    : values.currWeight * 0.453592; // Convert lbs to kg if needed
-  const height = values.useMetric ? values.height : values.height * 2.54; // Convert inches to cm if needed
+    ? values.currWeight * 0.453592
+    : values.currWeight; // Convert lbs to kg if needed
+  const height = values.useMetric ? values.height * 2.54 : values.height; // Convert inches to cm if needed
 
   // Using Mifflin-St Jeor Formula for BMR
   const bmr = 10 * weight + 6.25 * height - 5;
