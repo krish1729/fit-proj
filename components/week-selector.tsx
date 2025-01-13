@@ -1,5 +1,4 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { Label } from "./ui/label";
 import {
   Select,
   SelectContent,
@@ -8,6 +7,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { db } from "@/lib/db";
+import { Label } from "./ui/label";
 
 export default async function WeekSelector() {
   const user = await currentUser();
@@ -20,7 +20,6 @@ export default async function WeekSelector() {
   const timeframe = userGoals?.timeframe;
   const numOfMonths = timeframe?.slice(0, 1);
   const numOfWeeks = Number(numOfMonths) * 4;
-  console.log("Number of Weeks are: ", numOfWeeks);
 
   const weekSelect = ({ numOfWeeks }: { numOfWeeks: number }) => {
     const weekOptions = [];
@@ -35,12 +34,11 @@ export default async function WeekSelector() {
   };
 
   const weekOptions = weekSelect({ numOfWeeks });
-
   return (
     <div>
       <div>
         <Label htmlFor="week" className="text-center">
-          Week
+          Select the Week
         </Label>
         <Select>
           <SelectTrigger>
