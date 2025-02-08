@@ -9,6 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 import { Eclipse, Home, Settings, UserPen } from "lucide-react";
 
 const items = [
@@ -54,6 +55,13 @@ export function AppSidebar() {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <SignedIn>
+          <div className="flex justify-end p-4">
+            <UserButton />
+          </div>
+        </SignedIn>
+      </SidebarFooter>
     </Sidebar>
   );
 }

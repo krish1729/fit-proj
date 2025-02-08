@@ -41,11 +41,6 @@ export default function RootLayout({
           <SignedOut>
             <SignInButton />
           </SignedOut>
-          <SignedIn>
-            <div className="flex justify-end p-4">
-              <UserButton />
-            </div>
-          </SignedIn>
           <SidebarProvider>
             <AppSidebar />
             <main className="h-full w-full">
