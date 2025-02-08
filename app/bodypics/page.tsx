@@ -9,9 +9,12 @@ export default function BodyPics() {
         <BodyPicsUpload />
       </div>
       <div className="flex flex-row items-center justify-center p-4 gap-6">
-        <WeekSelector />
-        <ProfileSelector />
-        <WeekSelector />
+        <WeekSelector weekSelectorId="LEFT_WEEK" weekLabel="Start Week" />
+        <ProfileSelector
+          profileSelectorId="COMPARE_PROFILE"
+          placeholder="Select Profile"
+        />
+        <WeekSelector weekSelectorId="RIGHT_WEEK" weekLabel="End Week" />
       </div>
     </div>
   );

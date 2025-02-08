@@ -1,15 +1,90 @@
-import { ImagePlus } from "lucide-react";
+"use client";
+
+import { ImagePlus, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import useProfileStore from "@/store/profileStore";
+import useWeekStore from "@/store/weekStore";
+import { profileSelectorId } from "@/types/profileTypes";
+import { weekSelectorId } from "@/types/weekTypes";
+import { useState } from "react";
 
-export default function ImageUpload() {
+interface ImageUploadProps {
+  profileSelectorId: profileSelectorId;
+  weekSelectorId: weekSelectorId;
+}
+
+export default function ImageUpload({
+  profileSelectorId,
+  weekSelectorId,
+}: ImageUploadProps) {
+  const [image, setImage] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const profile = useProfileStore((state) => state.profiles[profileSelectorId]);
+  const week = useWeekStore((state) => state.weeks[weekSelectorId]);
+  console.log("profile is: ", profile);
+  console.log("week is: ", week);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setImage(file);
+    }
+    console.log("image is: ", image);
+  };
+
+  const handleSubmit = async () => {
+    if (!image || !profile || !week) {
+      console.error("Missing required fields: image, profile, week");
+      return;
+    }
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+      formData.append("profile", JSON.stringify(profile));
+      formData.append("week", JSON.stringify(week));
+
+      const response = await fetch("api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await response.json();
+      console.log("Upload successful: ", result);
+      setImage(null);
+      console.log("formData is: ", formData);
+    } catch (error) {
+      console.error("Error creating FormData:", error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   return (
     <div>
-      <div>
-        <Input type="file" />
-        <Button className="my-4 w-full">
-          <ImagePlus />
-          Submit
+      <div className="space-y-4">
+        <Input
+          type="file"
+          onChange={handleImageChange}
+          accept="image/*"
+          disabled={isUploading}
+        />
+        <Button
+          className="my-4 w-full"
+          onClick={handleSubmit}
+          // disabled={!image || !profile || !week}
+        >
+          {isUploading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <ImagePlus className="h-4 w-4" />
+          )}
+          {isUploading ? "Uploading ..." : "Submit"}
         </Button>
       </div>
     </div>

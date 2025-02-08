@@ -10,7 +10,9 @@ import {
 import WeekSelector from "./week-selector";
 import ProfileSelector from "./profile-selector";
 import { Label } from "./ui/label";
-import ImageUpload from "./image-upload";
+import ImageUploadWrapper from "./image-upload-wrapper";
+import { PROFILE_SELECTORS } from "@/types/profileTypes";
+import { WEEK_SELECTORS } from "@/types/weekTypes";
 
 export default function BodyPicsUpload() {
   return (
@@ -31,14 +33,23 @@ export default function BodyPicsUpload() {
               <div className="grid grid-cols-1 items-center">
                 <div className="flex flex-col w-auto m-4 p-4 gap-6">
                   <div>
-                    <WeekSelector />
+                    <WeekSelector
+                      weekSelectorId="DIALOG_WEEK"
+                      weekLabel="Select Week"
+                    />
                   </div>
                   <div>
-                    <ProfileSelector />
+                    <ProfileSelector
+                      profileSelectorId="UPLOAD_PROFILE"
+                      placeholder="Select Profile"
+                    />
                   </div>
                   <div>
                     <Label htmlFor="bodyPic">Upload Body Picture</Label>
-                    <ImageUpload />
+                    <ImageUploadWrapper
+                      profileSelectorId={PROFILE_SELECTORS.UPLOAD_PROFILE}
+                      weekSelectorId={WEEK_SELECTORS.DIALOG_WEEK}
+                    />
                   </div>
                 </div>
               </div>

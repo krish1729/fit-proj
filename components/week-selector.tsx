@@ -1,15 +1,19 @@
 import { currentUser } from "@clerk/nextjs/server";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { SelectItem } from "./ui/select";
 import { db } from "@/lib/db";
 import { Label } from "./ui/label";
+import WeekSelectClient from "./week-select-client";
+import { weekSelectorId } from "@/types/weekTypes";
 
-export default async function WeekSelector() {
+interface WeekSelectorProps {
+  weekSelectorId: weekSelectorId;
+  weekLabel?: string;
+}
+
+export default async function WeekSelector({
+  weekSelectorId,
+  weekLabel,
+}: WeekSelectorProps) {
   const user = await currentUser();
   const emailAddress = user?.emailAddresses[0].emailAddress;
   const userGoals = await db.goals.findFirst({
@@ -38,14 +42,12 @@ export default async function WeekSelector() {
     <div>
       <div>
         <Label htmlFor="week" className="text-center">
-          Select the Week
+          {weekLabel}
         </Label>
-        <Select>
-          <SelectTrigger>
-            <SelectValue placeholder="Select Week to Upload" />
-          </SelectTrigger>
-          <SelectContent>{weekOptions}</SelectContent>
-        </Select>
+        <WeekSelectClient
+          weekSelectorId={weekSelectorId}
+          weekOptions={weekOptions}
+        />
       </div>
     </div>
   );
