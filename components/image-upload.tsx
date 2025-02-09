@@ -8,6 +8,7 @@ import useWeekStore from "@/store/weekStore";
 import { profileSelectorId } from "@/types/profileTypes";
 import { weekSelectorId } from "@/types/weekTypes";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface ImageUploadProps {
   profileSelectorId: profileSelectorId;
@@ -20,6 +21,8 @@ export default function ImageUpload({
 }: ImageUploadProps) {
   const [image, setImage] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+
+  const { toast } = useToast();
 
   const profile = useProfileStore((state) => state.profiles[profileSelectorId]);
   const week = useWeekStore((state) => state.weeks[weekSelectorId]);
@@ -58,8 +61,10 @@ export default function ImageUpload({
       console.log("Upload successful: ", result);
       setImage(null);
       console.log("formData is: ", formData);
+      toast({ title: "Submitted", description: "Uploaded image" });
     } catch (error) {
       console.error("Error creating FormData:", error);
+      toast({ variant: "destructive", title: "Error Uploading" });
     } finally {
       setIsUploading(false);
     }
@@ -77,14 +82,14 @@ export default function ImageUpload({
         <Button
           className="my-4 w-full"
           onClick={handleSubmit}
-          // disabled={!image || !profile || !week}
+          disabled={!image || !profile || !week}
         >
           {isUploading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
             <ImagePlus className="h-4 w-4" />
           )}
-          {isUploading ? "Uploading ..." : "Submit"}
+          {isUploading ? "Uploading ..." : "Upload"}
         </Button>
       </div>
     </div>

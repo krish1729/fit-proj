@@ -1,4 +1,5 @@
 import BodyPicsUpload from "@/components/bodypics-upload";
+import ComparisonSection from "@/components/comparison-section";
 import ProfileSelector from "@/components/profile-selector";
 import WeekSelector from "@/components/week-selector";
 
@@ -15,6 +16,10 @@ export default function BodyPics() {
           placeholder="Select Profile"
         />
         <WeekSelector weekSelectorId="RIGHT_WEEK" weekLabel="End Week" />
+      </div>
+
+      <div className="mt-8">
+        <ComparisonSection />
       </div>
     </div>
   );
