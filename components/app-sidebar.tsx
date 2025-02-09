@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import { Eclipse, Home, Settings, UserPen } from "lucide-react";
+import { NavUser } from "./nav-user";
 
 const items = [
   {
@@ -56,11 +57,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <SignedIn>
-          <div className="flex justify-end p-4">
-            <UserButton />
-          </div>
-        </SignedIn>
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );
